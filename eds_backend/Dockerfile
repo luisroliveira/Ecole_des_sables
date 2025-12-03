@@ -1,29 +1,38 @@
-# Use uma imagem oficial do Python
 FROM python:3.13-slim
 
-# Set working directory
+# Definir diretório de trabalho
 WORKDIR /app
 
-# Copie os arquivos de requirements primeiro (para otimizar cache)
+# Instalar dependências do sistema necessárias para psycopg2 e Pillow
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    libpq-dev \
+    gcc \
+    libjpeg-dev \
+    zlib1g-dev \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+
+# Copiar requirements.txt primeiro para aproveitar cache
 COPY requirements.txt .
 
-# Atualize pip e instale dependências
+# Atualizar pip e instalar dependências Python
 RUN pip install --upgrade pip setuptools wheel \
     && pip install -r requirements.txt
 
-# Copie todo o restante do projeto
+# Copiar o restante do projeto
 COPY . .
 
-# Defina variáveis de ambiente padrão (podem ser sobrescritas no Render)
+# Variáveis de ambiente (pode sobrescrever no Render)
 ENV DEBUG=0
 ENV SECRET_KEY=supersecretkey
 ENV DATABASE_URL=postgres://user:password@host:port/dbname
 ENV ALLOWED_HOSTS=*
 
-# Exponha a porta que o Gunicorn usará
+# Expor porta
 EXPOSE 8000
 
-# Comando para coletar static files, migrar banco e rodar Gunicorn
+# Comando padrão: migrar banco, coletar static e rodar Gunicorn
 CMD sh -c "python manage.py collectstatic --noinput && \
            python manage.py makemigrations && \
            python manage.py migrate && \
