@@ -10,7 +10,7 @@ psycopg2-binary==2.9.9
 python-decouple==3.8
 python-dotenv==0.21.1
 PyJWT==2.3.0
-
+gunicorn==21.2.0
 # Segurança e criptografia
 bcrypt==3.2.0
 cryptography==3.4.8
