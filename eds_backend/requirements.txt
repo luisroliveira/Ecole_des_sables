@@ -1,5 +1,5 @@
 # ==================== CORE DJANGO ====================
-Django==4.2.7
+Django==4.2.16                  # Atualizado para ser compatível com django-allauth 65.4.0
 djangorestframework==3.14.0
 djangorestframework-simplejwt==5.3.0
 django-cors-headers==4.3.1
@@ -17,7 +17,7 @@ PyJWT==2.10.1
 bcrypt==5.0.0
 argon2-cffi==25.1.0
 argon2-cffi-bindings==25.1.0
-cffi==2.0.0
+cffi==1.15.1                    # Ajustado para compatibilidade com Python 3.11
 pycparser==2.23
 
 # ==================== EXCEL & DATA PROCESSING ====================
