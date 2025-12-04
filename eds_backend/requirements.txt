@@ -52,3 +52,4 @@ coverage==7.10.6
 pluggy==1.6.0
 iniconfig==2.1.0
 packaging==25.0
+dj-database-url==0.5.0
